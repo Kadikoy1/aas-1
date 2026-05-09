@@ -3,14 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AAS-1 — Agent Audit Standard</title>
-<meta name="description" content="AAS-1 is the open standard for agent audit. A technology-neutral evidentiary record format and twelve assertions enabling assurance over autonomous AI agent activity. CC0 — free to implement.">
-<meta name="keywords" content="agent audit, AAS-1, agent audit standard, autonomous agents, audit assertions, AIS-1, Kadikoy">
-<meta property="og:title" content="AAS-1 — Agent Audit Standard">
-<meta property="og:description" content="The open standard for agent audit. CC0 — no rights reserved.">
+<title>AAS-1 — Agent Auditability Standard</title>
+<meta name="description" content="AAS-1 is the open standard for AI agent auditability. A technology-neutral evidentiary record format and twelve assertions enabling assurance over autonomous AI agent activity. CC0 — free to implement.">
+<meta name="keywords" content="AI agent auditability, agent auditability, AAS-1, agent auditability standard, agent audit, autonomous agents, audit assertions, AIS-1, Kadikoy">
+<meta property="og:title" content="AAS-1 — Agent Auditability Standard">
+<meta property="og:description" content="The open standard for AI agent auditability. CC0 — no rights reserved.">
 <meta property="og:url" content="https://aas-1.org">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://aas-1.org">
+
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23DC2626'/%3E%3Ctext x='16' y='22' font-family='-apple-system,system-ui,sans-serif' font-size='14' font-weight='800' text-anchor='middle' fill='white'%3EA1%3C/text%3E%3C/svg%3E">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -586,13 +588,14 @@
       <div class="brand-mark">A1</div>
       <div class="brand-text">
         <div class="a">AAS-1</div>
-        <div class="b">Agent Audit Standard</div>
+        <div class="b">Agent Auditability Standard</div>
       </div>
     </div>
     <ul>
       <li class="hide-mobile"><a href="#what">What it is</a></li>
       <li class="hide-mobile"><a href="#classes">Classes</a></li>
       <li class="hide-mobile"><a href="#assertions">Assertions</a></li>
+      <li class="hide-mobile"><a href="#manual">Manual</a></li>
       <li class="hide-mobile"><a href="#timeline">Timeline</a></li>
       <li class="hide-mobile"><a href="#feedback">Comment</a></li>
       <li><a class="gh" href="https://github.com/Kadikoy1/aas-1">GitHub →</a></li>
@@ -603,11 +606,12 @@
 <header class="hero">
   <div class="wrap">
     <div class="pill"><span class="dot"></span>Draft for public comment · v0.1 · May 2026</div>
-    <h1 class="title">The open standard for <em>agent audit</em></h1>
+    <h1 class="title">The open standard for <em>AI agent auditability</em></h1>
     <p class="lede">AAS-1 defines an evidentiary record format and a set of standard assertions that allow an independent reviewer — human or agent — to form assurance opinions about the activity of autonomous AI agents.</p>
+    <p class="lede">The AAS-1 Audit Manual provides the engagement procedures practitioners follow when applying the standard — from pre-engagement scoping through to issuing the Class D Determination.</p>
     <div class="ctas">
-      <a class="btn primary" href="https://kadikoy1.github.io/aas-1/docs/AAS-1_Specification_v0_1.pdf">Read the specification →</a>
-      <a class="btn ghost" href="#feedback">Submit feedback</a>
+      <a class="btn primary" href="/AAS-1_Specification_v0_1.pdf">Read the specification →</a>
+      <a class="btn ghost" href="/AAS-1_Audit_Manual_v0_1.pdf">Read the audit manual →</a>
     </div>
     <div class="hero-meta">
       <div>CC0 — no rights reserved</div>
@@ -626,6 +630,7 @@
     <h2>What is <em>AAS-1</em>?</h2>
     <p class="lead">AAS-1 is an open standard for producing audit-grade evidence about agent activity. It defines a record format, five record classes, and twelve standard assertions that allow auditors to evaluate agent actions against the same rigor applied to human-controlled processes.</p>
     <p class="lead">The standard addresses what we call the <strong>Unauditable Agent Problem</strong>: autonomous agents are now executing transactions, making decisions and producing outputs at scale, yet the records they leave behind are platform-specific, unstructured and not designed for assurance. AAS-1 defines a portable evidentiary format, anchored to AIS-1 identities, that any auditor can evaluate.</p>
+    <p class="lead">At its core AAS-1 is a relationship between two parties — the <strong>agent</strong> emits a Class A record per action; the <strong>auditor</strong> emits a Class D opinion in response. Class B and Class C aggregate Class A for sampling; Class E wraps the engagement. The diagram shows the actor-output pair at the heart of the standard.</p>
 
     <div class="diagram">
       <div class="diagram-card">
@@ -686,6 +691,8 @@
         </ul>
       </div>
     </div>
+
+    <p class="lead" style="margin-top: 40px;">The AAS-1 Audit Manual has been prepared to assist practitioners in applying the standard — see the <a href="#manual" style="color: var(--accent); font-weight: 600; text-decoration: none;">Audit Manual section</a> below for details.</p>
   </div>
 </section>
 
@@ -778,6 +785,59 @@
   </div>
 </section>
 
+<section id="manual">
+  <div class="wrap">
+    <div class="section-label">Engagement</div>
+    <h2>What is the <em>Audit Manual</em>?</h2>
+    <p class="lead">The Audit Manual is the operational companion to the specification. Where the spec defines <strong>what</strong> AAS-1 records are, the manual sets out <strong>how</strong> an auditor receives them, evaluates them, and issues an opinion. It is the practitioner's playbook for conducting an AAS-1 Class D Determination.</p>
+    <p class="lead">A specification on its own would leave every auditor inventing their own procedures from the spec text. The manual closes that gap. It walks through pre-engagement scoping, receiving and validating the record population, the per-record verification flow, detailed procedures for each of the twelve assertions, sampling methodology for large populations, and the form of the Class D Determination itself. A worked example over the PayAgent USDC transfer shows the procedures applied end-to-end.</p>
+    <p class="lead">This makes AAS-1 immediately deployable rather than aspirational. An auditor can pick up the manual, follow the procedures, and conduct an engagement without further interpretation. The first AAS-1 engagement — over PayAgent's Q2 2026 records — is being conducted to this manual; subsequent engagements use it as the standard reference.</p>
+
+    <div class="classes" style="margin-top: 56px;">
+      <div class="class-card">
+        <div class="class-tag">Section 2</div>
+        <h4>Pre-engagement</h4>
+        <p>Define the Class E engagement: scope, period, applicable framework, materiality threshold, agent population. The on-record equivalent of an engagement letter, signed by both parties.</p>
+        <span class="role">Class E setup</span>
+      </div>
+      <div class="class-card">
+        <div class="class-tag">Section 3</div>
+        <h4>Population validation</h4>
+        <p>Receive the records (pull from registry, batch push, or continuous stream). Walk the prevHash chain, recompute Merkle roots, reconcile counts against external statements.</p>
+        <span class="role">Receipt + verify</span>
+      </div>
+      <div class="class-card">
+        <div class="class-tag">Section 4</div>
+        <h4>Verification flow</h4>
+        <p>Per-record technical checks: resolve the AIS-1 identity, validate the signature, verify the independent timestamp, recompute hashes against source data where accessible.</p>
+        <span class="role">4 phases</span>
+      </div>
+      <div class="class-card">
+        <div class="class-tag">Section 5</div>
+        <h4>Twelve assertions</h4>
+        <p>Detailed auditor procedures for each of the seven classical and five agent-specific assertions. Definitions, fields supporting evaluation, step-by-step procedures, common exceptions.</p>
+        <span class="role">12 procedures</span>
+      </div>
+      <div class="class-card">
+        <div class="class-tag">Sections 6–8</div>
+        <h4>Sampling &amp; determination</h4>
+        <p>Sampling methodology for batch and continuous populations. Findings catalogue mapping common issues to finding types. Issuing the Class D — fields, signature, publication.</p>
+        <span class="role">Class D output</span>
+      </div>
+      <div class="class-card">
+        <div class="class-tag">§9 + Apps A–C</div>
+        <h4>Worked example + templates</h4>
+        <p>Full evaluation walkthrough on the PayAgent USDC transfer. Class D determination template, engagement letter template, working-paper checklist for the auditor.</p>
+        <span class="role">PayAgent + forms</span>
+      </div>
+    </div>
+
+    <div style="margin-top:48px;text-align:center;">
+      <a class="btn primary" href="/AAS-1_Audit_Manual_v0_1.pdf">Read the audit manual →</a>
+    </div>
+  </div>
+</section>
+
 <section id="timeline">
   <div class="wrap">
     <div class="section-label">Roadmap</div>
@@ -788,7 +848,7 @@
         <div class="tl-date">MAY 2026</div>
         <div class="tl-body">
           <h4>AAS-1 v0.1 published</h4>
-          <p>Specification, JSON Schema for Class A and worked example published on GitHub under CC0. Open for public comment until 31 July 2026.</p>
+          <p>Specification, audit manual, JSON Schema for Class A and worked PayAgent example published under CC0. Open for public comment until 31 July 2026.</p>
         </div>
         <div class="tl-status live">Live</div>
       </div>
@@ -826,23 +886,29 @@
     <h2>Specification and <em>supporting materials.</em></h2>
 
     <div class="docs">
-      <a class="doc" href="https://kadikoy1.github.io/aas-1/docs/AAS-1_Specification_v0_1.pdf">
+      <a class="doc" href="/AAS-1_Specification_v0_1.pdf">
         <div class="kind">Specification</div>
         <h4>AAS-1 Specification v0.1</h4>
         <p>The full technical working paper. Motivation, definitions, the audit record, five record classes, twelve assertions, schema specification, AIS-1 binding, security and regulatory considerations, and worked example.</p>
         <span class="footer">Published · PDF</span>
       </a>
-      <a class="doc" href="https://github.com/Kadikoy1/aas-1/blob/main/schemas/aas-1-class-a.schema.json">
+      <a class="doc" href="/AAS-1_Audit_Manual_v0_1.pdf">
+        <div class="kind">Audit Manual</div>
+        <h4>AAS-1 Audit Manual v0.1</h4>
+        <p>The engagement guide for auditors conducting a Class D Determination. Pre-engagement scoping, per-record verification flow, procedures for the twelve assertions, sampling, findings catalogue, and the worked PayAgent example.</p>
+        <span class="footer">Published · PDF</span>
+      </a>
+      <a class="doc" href="/aas-1-class-a.schema.json">
         <div class="kind">JSON Schema</div>
         <h4>Class A Action Record</h4>
         <p>JSON Schema 2020-12 for Class A records. Required and optional fields, evidence types, signature object, action sub-schema with tools and model.</p>
-        <span class="footer">Published · GitHub</span>
+        <span class="footer">Published · JSON</span>
       </a>
-      <a class="doc" href="https://github.com/Kadikoy1/aas-1/blob/main/examples/aas-1-example-class-a.json">
+      <a class="doc" href="/aas-1-example-class-a.json">
         <div class="kind">Worked Example</div>
         <h4>PayAgent Class A — USDC transfer</h4>
         <p>A worked Class A record: PayAgent executes a stablecoin transfer on behalf of its principal. Includes signature, attestation, hash anchor and log evidence.</p>
-        <span class="footer">Published · GitHub</span>
+        <span class="footer">Published · JSON</span>
       </a>
       <a class="doc" href="https://ais-1.org">
         <div class="kind">Companion Standard</div>
@@ -864,9 +930,10 @@
       <h4>We are looking for:</h4>
       <p>Review of the assertion catalogue from practising auditors · feedback on the Class A schema and evidence types · proposed regulatory profile mappings (DABA, SOC 2, ISAE 3402, statutory audit) · input on Class C continuous-streaming semantics · proposals for authorised reference implementations · real-world engagement use cases.</p>
       <div class="links">
-        <a href="https://github.com/Kadikoy1/aas-1/issues">GitHub Issues</a>
+        <a href="https://github.com/Kadikoy1/aas-1/issues/new?template=feedback.md">File feedback</a>
+        <a href="https://github.com/Kadikoy1/aas-1/issues/new?template=proposal.md">Propose a change</a>
+        <a href="https://github.com/Kadikoy1/aas-1/issues">All issues</a>
         <a href="mailto:info@aiagentsservices.net">✉ info@aiagentsservices.net</a>
-        <a href="https://agent-pulse.ai">◈ AgentPulse</a>
       </div>
     </div>
 
@@ -899,7 +966,7 @@
 <footer>
   <div class="wrap">
     <div class="colophon">
-      <strong>AAS-1</strong> — Agent Audit Standard · v0.1 · May 2026<br>
+      <strong>AAS-1</strong> — Agent Auditability Standard · v0.1 · May 2026<br>
       Published by <strong>BDA AI Agent Services</strong> · Kadikoy Limited, Bermuda<br>
       <span class="cc">CC0</span> — No rights reserved. Free to implement without restriction.
     </div>
