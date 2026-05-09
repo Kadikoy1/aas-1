@@ -1,6 +1,6 @@
-# AAS-1 — Agent Audit Standard
+# AAS-1 — Agent Auditability Standard
 
-> The open standard for agent audit. CC0 — free to implement.
+> The open standard for agent auditability. CC0 — free to implement.
 
 **Version:** 0.1 (working draft)
 **Status:** Draft for public comment — closes 31 July 2026

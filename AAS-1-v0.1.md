@@ -1,4 +1,4 @@
-# AAS-1: Agent Audit Standard
+# AAS-1: Agent Auditability Standard
 
 **Version:** 0.1 (working draft)
 **Status:** Draft for comment
@@ -158,7 +158,7 @@ CC0 1.0 Universal. No rights reserved. Free to implement without restriction.
 
 ---
 
-**AAS-1** — Agent Audit Standard · v0.1 · May 2026
+**AAS-1** — Agent Auditability Standard · v0.1 · May 2026
 Published by BDA AI Agent Services · Kadikoy Limited, Bermuda
 
 Companion to AIS-1 (Agent Identity Standard).
