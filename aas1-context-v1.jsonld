@@ -1,0 +1,74 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://aas-1.org/vocab/v1#",
+
+    "aas":  "https://aas-1.org/vocab/v1#",
+    "ais1": "https://ais-1.org/vocab/v1#",
+    "xsd":  "http://www.w3.org/2001/XMLSchema#",
+    "sec":  "https://w3id.org/security#",
+
+    "ActionRecord":        "aas:ActionRecord",
+    "BatchRecord":         "aas:BatchRecord",
+    "ContinuousRecord":    "aas:ContinuousRecord",
+    "Determination":       "aas:Determination",
+    "Engagement":          "aas:Engagement",
+    "Evidence":            "aas:Evidence",
+    "Signature":           "sec:Signature",
+
+    "version":             { "@id": "aas:version" },
+    "eventId":             "aas:eventId",
+    "class":               "aas:recordClass",
+
+    "agentRef":            { "@id": "aas:agentRef",       "@type": "@id" },
+    "principalRef":        { "@id": "aas:principalRef",   "@type": "@id" },
+    "delegationRef":       { "@id": "aas:delegationRef",  "@type": "@id" },
+    "engagementRef":       { "@id": "aas:engagementRef",  "@type": "@id" },
+    "auditorRef":          { "@id": "aas:auditorRef",     "@type": "@id" },
+    "subjectRefs":         { "@id": "aas:subjectRefs",    "@type": "@id", "@container": "@set" },
+
+    "timestamp":           { "@id": "aas:timestamp", "@type": "xsd:dateTime" },
+    "timestampServiceRef": "aas:timestampServiceRef",
+
+    "action":              "aas:action",
+    "actionType":          "aas:actionType",
+    "inputsHash":          "aas:inputsHash",
+    "outputsHash":         "aas:outputsHash",
+    "tools":               { "@id": "aas:tools",  "@container": "@set" },
+    "model":               "aas:model",
+    "id":                  "aas:identifier",
+    "name":                "aas:name",
+    "summary":             "aas:summary",
+    "serverRef":           { "@id": "aas:serverRef", "@type": "@id" },
+
+    "policyRefs":          { "@id": "aas:policyRefs", "@type": "@id", "@container": "@set" },
+    "policyResult":        "aas:policyResult",
+    "outcome":             "aas:outcome",
+    "details":             "aas:details",
+
+    "materiality":         "aas:materiality",
+    "currency":            "aas:currency",
+    "amount":              { "@id": "aas:amount", "@type": "xsd:decimal" },
+    "basis":               "aas:basis",
+
+    "evidence":            { "@id": "aas:evidence",     "@container": "@set" },
+    "evidenceType":        "aas:evidenceType",
+    "value":               "aas:evidenceValue",
+    "issuerRef":           { "@id": "aas:evidenceIssuerRef", "@type": "@id" },
+
+    "attestations":        { "@id": "aas:attestations", "@container": "@set" },
+    "prevHash":            "aas:prevHash",
+
+    "signature":           "sec:proof",
+    "alg":                 "sec:algorithm",
+    "hashAlg":             "aas:hashAlgorithm",
+    "canonicalisation":    "aas:canonicalisation",
+    "keyRef":              { "@id": "sec:verificationMethod", "@type": "@id" },
+
+    "finding":             "aas:finding",
+    "assertionResults":    { "@id": "aas:assertionResults", "@container": "@set" },
+    "assertion":           "aas:assertion",
+    "result":              "aas:result",
+    "notes":               "aas:notes"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "aas": "0.1",
+  "eventId": "01HZ8KQ3M7YPB4N9XJ2VQ5RTFW",
+  "class": "A",
+  "agentRef": "did:web:payagent.ai",
+  "principalRef": "did:web:kadikoy.bm",
+  "delegationRef": "https://kadikoy.bm/delegations/2026-q2-payments",
+  "engagementRef": "https://audits.example.com/engagements/kadikoy-2026-h1",
+  "timestamp": "2026-05-09T14:32:11Z",
+  "timestampServiceRef": "https://ais-1.org/timestamp/registered/0001",
+  "action": {
+    "type": "transaction",
+    "inputsHash": "sha256-9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+    "outputsHash": "sha256-2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae",
+    "tools": [
+      {
+        "name": "stablecoin-transfer",
+        "version": "1.4.0",
+        "serverRef": "https://mcp.payagent.ai/transfer"
+      }
+    ],
+    "model": {
+      "id": "claude-opus-4-7",
+      "version": "2026-04"
+    },
+    "summary": "Outbound USDC transfer of 2,500.00 from principal treasury to vendor wallet, pursuant to invoice INV-2026-0418."
+  },
+  "policyRefs": [
+    "https://kadikoy.bm/policies/payments/v3",
+    "https://kadikoy.bm/policies/aml-screening/v2"
+  ],
+  "policyResult": {
+    "outcome": "compliant",
+    "details": "Counterparty cleared screening; amount within delegated authority of USD 5,000 per transaction."
+  },
+  "materiality": {
+    "currency": "USD",
+    "amount": 2500.00,
+    "basis": "transaction-value"
+  },
+  "evidence": [
+    {
+      "type": "signature",
+      "value": "z3JmTpXq...truncated",
+      "issuerRef": "did:web:payagent.ai#key-1"
+    },
+    {
+      "type": "attestation",
+      "value": "TEE-quote-base64...truncated",
+      "issuerRef": "https://attest.example.com/tee/0xabc123"
+    },
+    {
+      "type": "hash_anchor",
+      "value": "ethereum:0x4f3edf...truncated",
+      "issuerRef": "https://etherscan.io"
+    },
+    {
+      "type": "log",
+      "value": "https://logs.payagent.ai/2026/05/09/01HZ8KQ3M7YPB4N9XJ2VQ5RTFW",
+      "issuerRef": "did:web:payagent.ai"
+    }
+  ],
+  "prevHash": "sha256-7d865e959b2466918c9863afca942d0fb89d7c9ac0c99bafc3749504ded97730",
+  "signature": {
+    "alg": "EdDSA",
+    "hashAlg": "SHA-256",
+    "canonicalisation": "JCS",
+    "keyRef": "did:web:payagent.ai#key-1",
+    "value": "z58dYMy3...truncated"
+  },
+  "notes": "Routine treasury payment. No human override invoked."
+}

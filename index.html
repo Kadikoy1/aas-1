@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AAS-1 — Agent Audit Standard</title>
+<meta name="description" content="AAS-1 is the open standard for agent audit. A technology-neutral evidentiary record format and twelve assertions enabling assurance over autonomous AI agent activity. CC0 — free to implement.">
+<meta name="keywords" content="agent audit, AAS-1, agent audit standard, autonomous agents, audit assertions, AIS-1, Kadikoy">
+<meta property="og:title" content="AAS-1 — Agent Audit Standard">
+<meta property="og:description" content="The open standard for agent audit. CC0 — no rights reserved.">
+<meta property="og:url" content="https://aas-1.org">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://aas-1.org">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --ink: #0F172A;
+    --ink-2: #475569;
+    --rule: #E2E8F0;
+    --accent: #DC2626;        /* red 600 */
+    --accent-deep: #991B1B;   /* red 800 */
+    --accent-soft: #FEF2F2;   /* red 50 */
+    --accent-soft-2: #FEE2E2; /* red 100 */
+    --good: #16A34A;          /* green 600 */
+    --good-soft: #DCFCE7;     /* green 100 */
+    --warn-soft: #FEF3C7;     /* amber 100 */
+    --warn: #B45309;          /* amber 700 */
+    --code-bg: #0F172A;
+    --code-fg: #E2E8F0;
+    --sans: 'Inter', system-ui, -apple-system, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+  /* ============ NAV ============ */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav .wrap {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+  nav .brand {
+    display: flex; align-items: center; gap: 12px;
+  }
+  nav .brand-mark {
+    width: 38px; height: 38px;
+    background: var(--accent);
+    color: white;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 13px;
+    letter-spacing: -0.02em;
+  }
+  nav .brand-text {
+    display: flex; flex-direction: column; line-height: 1.15;
+  }
+  nav .brand-text .a { font-weight: 700; font-size: 14px; color: var(--ink); }
+  nav .brand-text .b { font-weight: 500; font-size: 11px; color: var(--ink-2); }
+  nav ul {
+    display: flex; gap: 28px; list-style: none; align-items: center;
+  }
+  nav a {
+    font-size: 14px; font-weight: 500;
+    color: var(--ink-2); text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  nav a:hover { color: var(--ink); }
+  nav a.gh {
+    color: white; background: var(--accent);
+    padding: 9px 16px; border-radius: 6px;
+    font-weight: 600;
+  }
+  nav a.gh:hover { background: var(--accent-deep); color: white; }
+  @media (max-width: 820px) {
+    nav ul li.hide-mobile { display: none; }
+  }
+
+  /* ============ HERO ============ */
+  header.hero {
+    padding: 96px 0 80px;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent-soft);
+    color: var(--accent-deep);
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.04em;
+    margin-bottom: 36px;
+  }
+  .pill .dot {
+    width: 7px; height: 7px;
+    background: var(--accent); border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 0.45; } 50% { opacity: 1; } }
+
+  h1.title {
+    font-weight: 800;
+    font-size: clamp(40px, 6vw, 76px);
+    line-height: 1.04; letter-spacing: -0.03em;
+    color: var(--ink); max-width: 16ch;
+    margin: 0 auto 32px;
+  }
+  h1.title em {
+    font-style: normal; color: var(--accent);
+    font-weight: 800;
+  }
+  .lede {
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.55; color: var(--ink-2);
+    max-width: 60ch; margin: 0 auto 40px;
+    font-weight: 400;
+  }
+  .ctas {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 56px;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none; padding: 13px 22px;
+    border-radius: 8px; transition: all 0.15s ease;
+  }
+  .btn.primary {
+    background: var(--accent); color: white;
+    border: 1px solid var(--accent);
+  }
+  .btn.primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); }
+  .btn.ghost {
+    color: var(--ink); background: white;
+    border: 1px solid var(--rule);
+  }
+  .btn.ghost:hover { border-color: var(--ink); }
+
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 28px; justify-content: center;
+    font-size: 14px; color: var(--ink-2);
+  }
+  .hero-meta div {
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hero-meta div::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .hero-meta-line {
+    margin-top: 14px;
+    font-size: 14px; color: var(--ink-2);
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .hero-meta-line::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  /* ============ Section primitives ============ */
+  section {
+    padding: 96px 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-label {
+    font-size: 13px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  h2 {
+    font-weight: 700;
+    font-size: clamp(32px, 4vw, 48px);
+    line-height: 1.1; letter-spacing: -0.02em;
+    color: var(--ink); margin-bottom: 28px;
+    max-width: 24ch;
+  }
+  h2 em { font-style: normal; color: var(--accent); font-weight: 700; }
+  p.lead {
+    font-size: 17px; line-height: 1.6;
+    color: var(--ink-2); max-width: 64ch;
+    margin-bottom: 24px;
+  }
+  p { color: var(--ink-2); max-width: 64ch; }
+
+  /* ============ Diagram (Action / Determination cards) ============ */
+  .diagram {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    border-radius: 14px;
+    padding: 36px;
+    margin: 48px 0;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 0;
+    align-items: stretch;
+  }
+  .diagram-card {
+    padding: 8px 24px;
+  }
+  .diagram-card .label {
+    font-size: 11px; font-weight: 600;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: #FCA5A5; margin-bottom: 14px;
+  }
+  .diagram-card h4 {
+    font-size: 22px; font-weight: 700;
+    color: white; margin-bottom: 18px;
+  }
+  .diagram-card ul {
+    list-style: none;
+    font-size: 13.5px; line-height: 1.95;
+    color: #CBD5E1;
+  }
+  .diagram-card ul li::before {
+    content: '•';
+    color: var(--accent);
+    margin-right: 8px;
+  }
+  .diagram-axis {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 24px;
+  }
+  .diagram-axis span {
+    background: var(--accent);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+  }
+  .diagram-foot {
+    grid-column: 1 / -1;
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid #1E293B;
+    font-family: var(--mono); font-size: 12px;
+    color: #94A3B8;
+    display: flex; flex-wrap: wrap; gap: 28px;
+  }
+  .diagram-foot strong { color: white; font-weight: 600; }
+  @media (max-width: 720px) {
+    .diagram { grid-template-columns: 1fr; padding: 24px; }
+    .diagram-axis { padding: 16px 0; }
+    .diagram-axis span { writing-mode: horizontal-tb; transform: none; }
+  }
+
+  /* ============ Without / With ============ */
+  .compare {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 24px; margin-top: 40px;
+  }
+  .compare > div {
+    padding: 32px;
+    border-radius: 12px;
+    background: var(--accent-soft);
+  }
+  .compare > div.with {
+    background: var(--good-soft);
+  }
+  .compare h3 {
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .compare .without h3 { color: var(--accent-deep); }
+  .compare .with h3 { color: #166534; }
+  .compare ul { list-style: none; }
+  .compare li {
+    display: flex; gap: 14px; padding: 12px 0;
+    font-size: 14.5px; line-height: 1.55; color: var(--ink);
+  }
+  .compare li::before {
+    flex-shrink: 0;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700;
+    line-height: 1;
+  }
+  .compare .without li::before {
+    content: '✕';
+    background: var(--accent); color: white;
+  }
+  .compare .with li::before {
+    content: '✓';
+    background: var(--good); color: white;
+  }
+  @media (max-width: 720px) { .compare { grid-template-columns: 1fr; } }
+
+  /* ============ Classes grid ============ */
+  .classes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 16px; margin-top: 48px;
+  }
+  .class-card {
+    background: white;
+    padding: 28px 24px;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .class-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .class-tag {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.16em; color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .class-card h4 {
+    font-size: 22px; font-weight: 700;
+    margin-bottom: 12px; color: var(--ink);
+  }
+  .class-card p {
+    font-size: 13.5px; line-height: 1.55; color: var(--ink-2);
+    margin-bottom: 18px;
+  }
+  .class-card .role {
+    display: inline-block;
+    font-size: 11px; font-weight: 600;
+    color: var(--accent-deep);
+    background: var(--accent-soft);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  /* ============ Assertions grid ============ */
+  .assert-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px; margin: 44px 0 32px;
+  }
+  .assert-item {
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .assert-item.specific {
+    background: var(--accent-soft);
+    border-color: var(--accent-soft-2);
+  }
+  .assert-num {
+    font-size: 11px; font-weight: 700;
+    color: var(--accent); letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .assert-item.specific .assert-num { color: var(--accent-deep); }
+  .assert-name {
+    font-size: 16px; font-weight: 700;
+    color: var(--ink); margin-bottom: 4px;
+  }
+  .assert-desc {
+    font-size: 12.5px; line-height: 1.55; color: var(--ink-2);
+  }
+
+  /* ============ Code block ============ */
+  pre.code {
+    background: var(--code-bg);
+    color: var(--code-fg);
+    padding: 28px 32px; margin: 32px 0;
+    border-radius: 12px;
+    font-family: var(--mono); font-size: 13px;
+    line-height: 1.7; overflow-x: auto;
+  }
+  pre.code .c { color: #94A3B8; font-style: italic; }
+  pre.code .k { color: #C4B5FD; }
+  pre.code .s { color: #86EFAC; }
+  pre.code .v { color: #E2E8F0; }
+  pre.code .f { color: #FCA5A5; }
+
+  /* ============ Timeline ============ */
+  .timeline { margin-top: 40px; }
+  .tl-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 110px;
+    gap: 28px; padding: 24px 0;
+    border-top: 1px solid var(--rule);
+    align-items: start;
+  }
+  .tl-row:last-child { border-bottom: 1px solid var(--rule); }
+  .tl-date {
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.12em; color: var(--accent);
+  }
+  .tl-body h4 {
+    font-size: 19px; font-weight: 700; color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .tl-body p {
+    font-size: 14.5px; line-height: 1.55;
+    color: var(--ink-2); max-width: none;
+  }
+  .tl-status {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 999px;
+    text-align: center; align-self: start;
+    background: var(--accent-soft); color: var(--accent-deep);
+  }
+  .tl-status.live { background: var(--good-soft); color: #166534; }
+  .tl-status.soon { background: var(--warn-soft); color: var(--warn); }
+  @media (max-width: 720px) {
+    .tl-row { grid-template-columns: 1fr; gap: 8px; }
+    .tl-status { justify-self: start; }
+  }
+
+  /* ============ Documents ============ */
+  .docs {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-top: 40px;
+  }
+  .doc {
+    padding: 26px;
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--ink);
+    transition: all 0.15s ease;
+    display: flex; flex-direction: column; gap: 8px;
+    background: white;
+  }
+  .doc:hover {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .doc .kind {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+  }
+  .doc h4 {
+    font-size: 18px; font-weight: 700;
+    color: var(--ink);
+  }
+  .doc p {
+    font-size: 13.5px; line-height: 1.55;
+    color: var(--ink-2);
+  }
+  .doc .footer {
+    margin-top: 12px;
+    font-size: 12px; color: var(--ink-2);
+    background: var(--good-soft);
+    color: #166534;
+    display: inline-block; align-self: flex-start;
+    padding: 3px 10px; border-radius: 4px;
+    font-weight: 600;
+  }
+  @media (max-width: 720px) { .docs { grid-template-columns: 1fr; } }
+
+  /* ============ Looking-for box ============ */
+  .lookbox {
+    background: var(--accent-soft);
+    border: 1px solid var(--accent-soft-2);
+    border-radius: 14px;
+    padding: 36px;
+    margin: 32px 0;
+  }
+  .lookbox h4 {
+    font-size: 20px; font-weight: 700;
+    color: var(--ink); margin-bottom: 16px;
+  }
+  .lookbox p {
+    font-size: 14.5px; line-height: 1.7;
+    color: var(--ink-2); max-width: none;
+    margin-bottom: 24px;
+  }
+  .lookbox .links {
+    display: flex; flex-wrap: wrap; gap: 12px;
+  }
+  .lookbox .links a {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 9px 16px;
+    font-size: 13px; font-weight: 600;
+    color: var(--ink); text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .lookbox .links a:hover {
+    border-color: var(--accent); color: var(--accent);
+  }
+
+  /* ============ Form ============ */
+  form { margin-top: 32px; }
+  .form-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .form-grid label.full { grid-column: 1 / -1; }
+  label {
+    display: block;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--ink-2); margin-bottom: 8px;
+  }
+  input, select, textarea {
+    width: 100%; padding: 12px 14px;
+    font-family: var(--sans); font-size: 14.5px;
+    color: var(--ink); background: white;
+    border: 1px solid var(--rule); border-radius: 8px;
+    transition: border-color 0.15s ease;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none; border-color: var(--accent);
+  }
+  textarea { min-height: 130px; resize: vertical; }
+  .form-grid label.checkbox {
+    display: flex; align-items: center; gap: 10px;
+    text-transform: none; letter-spacing: 0;
+    font-size: 13.5px; color: var(--ink-2); margin-bottom: 0;
+  }
+  .form-grid label.checkbox input { width: auto; }
+  button.submit {
+    margin-top: 16px;
+    font-family: var(--sans); font-size: 15px; font-weight: 600;
+    background: var(--accent); color: white;
+    border: none; padding: 13px 22px;
+    border-radius: 8px; cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  button.submit:hover { background: var(--accent-deep); }
+  @media (max-width: 720px) { .form-grid { grid-template-columns: 1fr; } }
+
+  /* ============ Footer ============ */
+  footer {
+    padding: 48px 0 64px;
+    background: white;
+  }
+  footer .wrap {
+    display: flex; flex-wrap: wrap; gap: 32px; justify-content: space-between;
+    align-items: flex-start;
+  }
+  footer .colophon {
+    font-size: 13.5px; color: var(--ink-2); line-height: 1.7;
+    max-width: 60ch;
+  }
+  footer .colophon strong { color: var(--ink); font-weight: 700; }
+  footer .colophon .cc {
+    color: var(--accent); font-weight: 700;
+  }
+  footer .links { display: flex; flex-direction: column; gap: 8px; }
+  footer .links a {
+    font-size: 13px; font-weight: 500;
+    color: var(--ink-2); text-decoration: none;
+  }
+  footer .links a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-mark">A1</div>
+      <div class="brand-text">
+        <div class="a">AAS-1</div>
+        <div class="b">Agent Audit Standard</div>
+      </div>
+    </div>
+    <ul>
+      <li class="hide-mobile"><a href="#what">What it is</a></li>
+      <li class="hide-mobile"><a href="#classes">Classes</a></li>
+      <li class="hide-mobile"><a href="#assertions">Assertions</a></li>
+      <li class="hide-mobile"><a href="#timeline">Timeline</a></li>
+      <li class="hide-mobile"><a href="#feedback">Comment</a></li>
+      <li><a class="gh" href="https://github.com/Kadikoy1/aas-1">GitHub →</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="pill"><span class="dot"></span>Draft for public comment · v0.1 · May 2026</div>
+    <h1 class="title">The open standard for <em>agent audit</em></h1>
+    <p class="lede">AAS-1 defines an evidentiary record format and a set of standard assertions that allow an independent reviewer — human or agent — to form assurance opinions about the activity of autonomous AI agents.</p>
+    <div class="ctas">
+      <a class="btn primary" href="https://kadikoy1.github.io/aas-1/docs/AAS-1_Specification_v0_1.pdf">Read the specification →</a>
+      <a class="btn ghost" href="#feedback">Submit feedback</a>
+    </div>
+    <div class="hero-meta">
+      <div>CC0 — no rights reserved</div>
+      <div>JCS · RFC 3339 · AIS-1</div>
+      <div>Continuous attestation supported</div>
+    </div>
+    <div style="text-align:center;">
+      <div class="hero-meta-line">Open for comment until 31 July 2026</div>
+    </div>
+  </div>
+</header>
+
+<section id="what">
+  <div class="wrap">
+    <div class="section-label">The Standard</div>
+    <h2>What is <em>AAS-1</em>?</h2>
+    <p class="lead">AAS-1 is an open standard for producing audit-grade evidence about agent activity. It defines a record format, five record classes, and twelve standard assertions that allow auditors to evaluate agent actions against the same rigor applied to human-controlled processes.</p>
+    <p class="lead">The standard addresses what we call the <strong>Unauditable Agent Problem</strong>: autonomous agents are now executing transactions, making decisions and producing outputs at scale, yet the records they leave behind are platform-specific, unstructured and not designed for assurance. AAS-1 defines a portable evidentiary format, anchored to AIS-1 identities, that any auditor can evaluate.</p>
+
+    <div class="diagram">
+      <div class="diagram-card">
+        <div class="label">Class A — Action Record</div>
+        <h4>Agent Action</h4>
+        <ul>
+          <li>Event ID (ULID)</li>
+          <li>Agent ref (AIS-1 DID)</li>
+          <li>Principal ref</li>
+          <li>Action type &amp; hashes</li>
+          <li>Tools &amp; model</li>
+          <li>Policy refs &amp; result</li>
+          <li>Timestamp service</li>
+          <li>Signature</li>
+        </ul>
+      </div>
+      <div class="diagram-axis"><span>Evidence · Attestation</span></div>
+      <div class="diagram-card">
+        <div class="label">Class D — Determination</div>
+        <h4>Auditor Finding</h4>
+        <ul>
+          <li>Auditor ref (AIS-1 DID)</li>
+          <li>Engagement ref</li>
+          <li>Subject records</li>
+          <li>Per-assertion result</li>
+          <li>Finding type</li>
+          <li>Materiality basis</li>
+          <li>Timestamp service</li>
+          <li>Signature</li>
+        </ul>
+      </div>
+      <div class="diagram-foot">
+        <span><strong>Canonicalisation:</strong> RFC 8785 (JCS)</span>
+        <span><strong>Hashing:</strong> SHA-256 default</span>
+        <span><strong>Identity binding:</strong> AIS-1</span>
+      </div>
+    </div>
+
+    <div class="compare">
+      <div class="without">
+        <h3>Without AAS-1</h3>
+        <ul>
+          <li>Agent actions are unauditable — no standard evidence format</li>
+          <li>Each platform invents its own logging; no portability between auditors</li>
+          <li>Auditors lack tools to verify the actor or the authority for the action</li>
+          <li>Continuous assurance is impossible at agent speeds</li>
+          <li>Regulators cannot map agent activity onto existing audit frameworks</li>
+        </ul>
+      </div>
+      <div class="with">
+        <h3>With AAS-1</h3>
+        <ul>
+          <li>Every agent action emits a portable, attestable evidentiary record</li>
+          <li>Twelve standard assertions auditors evaluate against in any engagement</li>
+          <li>AIS-1 binding gives cryptographic verification of the actor and authority</li>
+          <li>Class C streaming enables continuous and real-time assurance</li>
+          <li>Records map cleanly onto ISA, ISAE 3000-series and SOC frameworks</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="classes">
+  <div class="wrap">
+    <div class="section-label">Records</div>
+    <h2>Five record classes. <em>One spine.</em></h2>
+    <p class="lead">A complete audit trail typically comprises many Class A records, organised by Class B or Class C aggregations, evaluated against a Class E engagement, and concluded with Class D determinations. Each class shares the core identity, evidence and signature primitives.</p>
+
+    <div class="classes">
+      <div class="class-card">
+        <div class="class-tag">Class A</div>
+        <h4>Action</h4>
+        <p>A single agent action with evidence. The atomic unit. Captures actor, principal, action type, hashed inputs and outputs, tools, model and signature.</p>
+        <span class="role">Issuer: agent / operator</span>
+      </div>
+      <div class="class-card">
+        <div class="class-tag">Class B</div>
+        <h4>Batch</h4>
+        <p>Aggregation of Class A records over a defined period. Carries a Merkle root over the canonicalised members and the standard identity and signature primitives.</p>
+        <span class="role">Issuer: operator</span>
+      </div>
+      <div class="class-card">
+        <div class="class-tag">Class C</div>
+        <h4>Continuous</h4>
+        <p>A single entry within a continuously attested stream. Bound to a separate stream-anchor record. Designed for high-frequency or always-on agents.</p>
+        <span class="role">Issuer: operator · v0.2</span>
+      </div>
+      <div class="class-card">
+        <div class="class-tag">Class D</div>
+        <h4>Determination</h4>
+        <p>An auditor's finding, opinion or exception over a set of subject records. Records per-assertion results and an overall finding type.</p>
+        <span class="role">Issuer: auditor</span>
+      </div>
+      <div class="class-card">
+        <div class="class-tag">Class E</div>
+        <h4>Engagement</h4>
+        <p>Audit engagement metadata: scope, period, applicable framework, materiality threshold, the agent population in scope and engagement letter hash.</p>
+        <span class="role">Issuer: auditor</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="assertions">
+  <div class="wrap">
+    <div class="section-label">Verification</div>
+    <h2>Twelve assertions. <em>One evaluation pass.</em></h2>
+    <p class="lead">AAS-1 records support seven assertions adapted from established audit frameworks (ISA 315/330, AICPA AU-C, ISAE 3000), plus five assertions specific to autonomous agents. An auditor — human or agent — evaluates every assertion in a single pass before issuing a Class D determination.</p>
+
+    <pre class="code"><span class="c">// Auditor verification flow — evaluating an AAS-1 Class A record</span>
+
+<span class="k">const</span> record   = <span class="k">await</span> <span class="f">aas1.fetch</span>(eventId);
+<span class="k">const</span> identity = <span class="k">await</span> <span class="f">ais1.resolve</span>(record.<span class="v">agentRef</span>);
+
+<span class="k">const</span> findings = <span class="k">await</span> auditor.<span class="f">evaluate</span>(record, {
+  identity,
+  assertions: <span class="v">AAS1</span>.<span class="v">ALL_ASSERTIONS</span>,
+  policies:   record.<span class="v">policyRefs</span>
+});
+
+<span class="c">// Returns per-assertion findings:</span>
+<span class="c">//   existence       'satisfied' | 'modified' | 'exception'</span>
+<span class="c">//   completeness    ...</span>
+<span class="c">//   accuracy        ...</span>
+<span class="c">//   identity        ...   (AIS-1 binding)</span>
+<span class="c">//   provenance      ...   (model, tools, prompt context)</span>
+<span class="c">//   reproducibility ...</span>
+
+<span class="k">if</span> (findings.<span class="v">allSatisfied</span>) {
+  <span class="k">await</span> auditor.<span class="f">issueClassD</span>({ finding: <span class="s">'unmodified'</span>, ... });
+} <span class="k">else</span> {
+  <span class="k">await</span> auditor.<span class="f">issueClassD</span>({ finding: <span class="s">'modified'</span>, exceptions: ... });
+}</pre>
+
+    <div class="assert-grid">
+      <div class="assert-item"><div class="assert-num">01 · CLASSICAL</div><div class="assert-name">Existence</div><div class="assert-desc">The recorded action actually took place.</div></div>
+      <div class="assert-item"><div class="assert-num">02 · CLASSICAL</div><div class="assert-name">Completeness</div><div class="assert-desc">All relevant actions in scope are recorded.</div></div>
+      <div class="assert-item"><div class="assert-num">03 · CLASSICAL</div><div class="assert-name">Accuracy</div><div class="assert-desc">Inputs and outputs are faithfully captured.</div></div>
+      <div class="assert-item"><div class="assert-num">04 · CLASSICAL</div><div class="assert-name">Authorisation</div><div class="assert-desc">The agent acted within delegated authority.</div></div>
+      <div class="assert-item"><div class="assert-num">05 · CLASSICAL</div><div class="assert-name">Cutoff</div><div class="assert-desc">Recorded in the correct period.</div></div>
+      <div class="assert-item"><div class="assert-num">06 · CLASSICAL</div><div class="assert-name">Classification</div><div class="assert-desc">Correctly categorised by action type.</div></div>
+      <div class="assert-item"><div class="assert-num">07 · CLASSICAL</div><div class="assert-name">Presentation</div><div class="assert-desc">Records are presented and described accurately.</div></div>
+      <div class="assert-item specific"><div class="assert-num">08 · AGENT-SPECIFIC</div><div class="assert-name">Identity</div><div class="assert-desc">The recorded actor is the agent of record (AIS-1 binding).</div></div>
+      <div class="assert-item specific"><div class="assert-num">09 · AGENT-SPECIFIC</div><div class="assert-name">Provenance</div><div class="assert-desc">Model, tools, prompt context and data sources captured.</div></div>
+      <div class="assert-item specific"><div class="assert-num">10 · AGENT-SPECIFIC</div><div class="assert-name">Reproducibility</div><div class="assert-desc">Sufficient state to permit re-derivation.</div></div>
+      <div class="assert-item specific"><div class="assert-num">11 · AGENT-SPECIFIC</div><div class="assert-name">Policy Compliance</div><div class="assert-desc">Applicable policies and compliance result recorded.</div></div>
+      <div class="assert-item specific"><div class="assert-num">12 · AGENT-SPECIFIC</div><div class="assert-name">Independence</div><div class="assert-desc">Agent action separated from operator override.</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="wrap">
+    <div class="section-label">Roadmap</div>
+    <h2>From draft to <em>deployed standard.</em></h2>
+
+    <div class="timeline">
+      <div class="tl-row">
+        <div class="tl-date">MAY 2026</div>
+        <div class="tl-body">
+          <h4>AAS-1 v0.1 published</h4>
+          <p>Specification, JSON Schema for Class A and worked example published on GitHub under CC0. Open for public comment until 31 July 2026.</p>
+        </div>
+        <div class="tl-status live">Live</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">Q3 2026</div>
+        <div class="tl-body">
+          <h4>v0.2 — Schemas for B, C, D, E</h4>
+          <p>Class B/D/E schemas finalised. Class C continuous-stream semantics defined. Materiality methodology annex. Mapping table to ISA 315/330. First DABA Class M and SOC 2 profiles drafted.</p>
+        </div>
+        <div class="tl-status soon">Q3 2026</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">Q4 2026</div>
+        <div class="tl-body">
+          <h4>First production audit using AAS-1</h4>
+          <p>PayAgent emits Class A records over a 90-day period. An independent reviewer issues a Class D determination. The full evidentiary chain — including the AIS-1 identity binding — is published as a reference engagement.</p>
+        </div>
+        <div class="tl-status">Q4 2026</div>
+      </div>
+      <div class="tl-row">
+        <div class="tl-date">2027</div>
+        <div class="tl-body">
+          <h4>Standardisation track</h4>
+          <p>Submission to IFAC and ISO/IEC JTC 1. Conformance test suite. Reference adapters for major audit-tooling platforms. Integration with continuous-assurance pipelines and agent-commerce settlement (Clavus, x402).</p>
+        </div>
+        <div class="tl-status">2027</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="documents">
+  <div class="wrap">
+    <div class="section-label">Documents</div>
+    <h2>Specification and <em>supporting materials.</em></h2>
+
+    <div class="docs">
+      <a class="doc" href="https://kadikoy1.github.io/aas-1/docs/AAS-1_Specification_v0_1.pdf">
+        <div class="kind">Specification</div>
+        <h4>AAS-1 Specification v0.1</h4>
+        <p>The full technical working paper. Motivation, definitions, the audit record, five record classes, twelve assertions, schema specification, AIS-1 binding, security and regulatory considerations, and worked example.</p>
+        <span class="footer">Published · PDF</span>
+      </a>
+      <a class="doc" href="https://github.com/Kadikoy1/aas-1/blob/main/schemas/aas-1-class-a.schema.json">
+        <div class="kind">JSON Schema</div>
+        <h4>Class A Action Record</h4>
+        <p>JSON Schema 2020-12 for Class A records. Required and optional fields, evidence types, signature object, action sub-schema with tools and model.</p>
+        <span class="footer">Published · GitHub</span>
+      </a>
+      <a class="doc" href="https://github.com/Kadikoy1/aas-1/blob/main/examples/aas-1-example-class-a.json">
+        <div class="kind">Worked Example</div>
+        <h4>PayAgent Class A — USDC transfer</h4>
+        <p>A worked Class A record: PayAgent executes a stablecoin transfer on behalf of its principal. Includes signature, attestation, hash anchor and log evidence.</p>
+        <span class="footer">Published · GitHub</span>
+      </a>
+      <a class="doc" href="https://ais-1.org">
+        <div class="kind">Companion Standard</div>
+        <h4>AIS-1 — Agent Identity Standard</h4>
+        <p>The identity layer that AAS-1 binds to. Every AAS-1 record references an AIS-1 identity for the agent and, in Class D, the auditor.</p>
+        <span class="footer">ais-1.org</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="feedback">
+  <div class="wrap">
+    <div class="section-label">Public Comment</div>
+    <h2>AAS-1 v0.1 is a <em>draft for comment.</em></h2>
+    <p class="lead">Feedback is invited from auditors, agent developers, blockchain engineers, legal and regulatory professionals, enterprise AI deployers, standards organisations and government bodies. The comment period closes <strong>31 July 2026</strong>. A revised v0.2 will incorporate substantive feedback.</p>
+
+    <div class="lookbox">
+      <h4>We are looking for:</h4>
+      <p>Review of the assertion catalogue from practising auditors · feedback on the Class A schema and evidence types · proposed regulatory profile mappings (DABA, SOC 2, ISAE 3402, statutory audit) · input on Class C continuous-streaming semantics · proposals for authorised reference implementations · real-world engagement use cases.</p>
+      <div class="links">
+        <a href="https://github.com/Kadikoy1/aas-1/issues">GitHub Issues</a>
+        <a href="mailto:info@aiagentsservices.net">✉ info@aiagentsservices.net</a>
+        <a href="https://agent-pulse.ai">◈ AgentPulse</a>
+      </div>
+    </div>
+
+    <form action="mailto:info@aiagentsservices.net" method="post" enctype="text/plain">
+      <div class="form-grid">
+        <label>Name<input type="text" name="name" required></label>
+        <label>Organisation<input type="text" name="organisation"></label>
+        <label>Email<input type="email" name="email" required></label>
+        <label>I am a
+          <select name="role">
+            <option>Select your background</option>
+            <option>Auditor / Assurance</option>
+            <option>AI / Blockchain Developer</option>
+            <option>Legal Professional</option>
+            <option>Regulator / Government</option>
+            <option>Enterprise Deployer</option>
+            <option>Investor</option>
+            <option>Standards Organisation</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label class="full">Feedback<textarea name="feedback" required></textarea></label>
+        <label class="full checkbox"><input type="checkbox" name="working_group"> I would like to join the AAS-1 technical working group</label>
+        <div class="full"><button type="submit" class="submit">Submit feedback →</button></div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="colophon">
+      <strong>AAS-1</strong> — Agent Audit Standard · v0.1 · May 2026<br>
+      Published by <strong>BDA AI Agent Services</strong> · Kadikoy Limited, Bermuda<br>
+      <span class="cc">CC0</span> — No rights reserved. Free to implement without restriction.
+    </div>
+    <div class="links">
+      <a href="https://github.com/Kadikoy1/aas-1">GitHub →</a>
+      <a href="https://ais-1.org">AIS-1 ↗</a>
+      <a href="https://agent-pulse.ai">AgentPulse ↗</a>
+      <a href="mailto:info@aiagentsservices.net">info@aiagentsservices.net</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
